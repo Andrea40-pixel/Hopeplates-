@@ -78,7 +78,20 @@ def donar_dashboard(request):
     if profile.user_type.strip().lower() != "donor":
         return redirect("ngo_dashboard")  # block NGO from donor page
 
-    return render(request, "donar_dashboard.html")
+    total_donations = FoodDonation.objects.count()
+    total_accepted = FoodDonation.objects.filter(status='Accepted').count()
+    total_expired = FoodDonation.objects.filter(status='Expired').count()
+    total_quantity = FoodDonation.objects.filter(status='Accepted') \
+                         .aggregate(Sum('quantity'))['quantity__sum'] or 0
+
+    return render(request, 'donar_dashboard.html', {
+
+        'total_donations': total_donations,
+        'total_accepted': total_accepted,
+        'total_expired': total_expired,
+        'people_fed': total_quantity,
+    })
+
 
 def add_food(request):
     return render(request, "add_food.html")

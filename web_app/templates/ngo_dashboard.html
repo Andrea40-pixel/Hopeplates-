@@ -459,26 +459,43 @@
     		</div>
     	</div>
     </section>
+<section class="ftco-section img" style="background-image: url({% static 'home/images/bg_3.jpg' %});">
+  <div class="container">
+    <div class="row justify-content-end">
+      <div class="col-md-6 heading-section ftco-animate">
 
-		<section class="ftco-section img" style="background-image: url({% static 'home/images/bg_3.jpg' %});">
-    	<div class="container">
-				<div class="row justify-content-end">
-          <div class="col-md-6 heading-section ftco-animate deal-of-the-day ftco-animate">
-          	<span class="subheading">Best Price For You</span>
-            <h2 class="mb-4">Deal of the day</h2>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
-            <h3><a href="#">Spinach</a></h3>
-            <span class="price">$10 <a href="#">now $5 only</a></span>
-            <div id="timer" class="d-flex mt-5">
-						  <div class="time" id="days"></div>
-						  <div class="time pl-3" id="hours"></div>
-						  <div class="time pl-3" id="minutes"></div>
-						  <div class="time pl-3" id="seconds"></div>
-						</div>
+        <span class="subheading">Hopeplates Impact</span>
+        <h2 class="mb-4">Together We Make a Difference</h2>
+        <p>Tracking real-time food redistribution impact across our community.</p>
+
+        <div class="row mt-5">
+
+          <div class="col-6 mb-4">
+            <h3 class="text-success">{{ total_donations }}</h3>
+            <p>Total Donations</p>
           </div>
+
+          <div class="col-6 mb-4">
+            <h3 class="text-primary">{{ total_accepted }}</h3>
+            <p>Successful Pickups</p>
+          </div>
+
+          <div class="col-6">
+            <h3 class="text-warning">{{ people_fed }}</h3>
+            <p>People Fed</p>
+          </div>
+
+          <div class="col-6">
+            <h3 class="text-danger">{{ total_expired }}</h3>
+            <p>Expired Donations</p>
+          </div>
+
         </div>
-    	</div>
-    </section>
+
+      </div>
+    </div>
+  </div>
+</section>
 
     <section class="ftco-section testimony-section">
       <div class="container">

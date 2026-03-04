@@ -5,18 +5,40 @@ from.models import  Notification,ContactDb
 
 from django.contrib.auth import logout
 from django.utils import timezone
+from django.db.models import Sum
 
 # Create your views here.
+
+
+
+
+
 
 @login_required
 def ngo_dashboard(request):
     profile = ProfileDb.objects.get(user=request.user)
 
     if profile.user_type.strip().lower() != "ngo":
-        return redirect("donar_dashboard")  # block donor from NGO page
+        return redirect("donar_dashboard")
 
     latest_donations = FoodDonation.objects.all().order_by('-id')[:8]
-    return render(request, 'ngo_dashboard.html', {'latest_donations': latest_donations})
+
+    total_donations = FoodDonation.objects.count()
+    total_accepted = FoodDonation.objects.filter(status='Accepted').count()
+    total_expired = FoodDonation.objects.filter(status='Expired').count()
+    total_quantity = FoodDonation.objects.filter(status='Accepted') \
+                         .aggregate(Sum('quantity'))['quantity__sum'] or 0
+
+
+    return render(request, 'ngo_dashboard.html', {
+        'latest_donations': latest_donations,
+        'total_donations': total_donations,
+        'total_accepted': total_accepted,
+        'total_expired': total_expired,
+        'people_fed': total_quantity,
+    })
+
+
 
 
 
@@ -64,7 +86,21 @@ def ngo_logout(request):
     logout(request)
     return redirect('login')
 def about(request):
-    return render(request,'about.html')
+    total_donations = FoodDonation.objects.count()
+    total_accepted = FoodDonation.objects.filter(status='Accepted').count()
+    total_expired = FoodDonation.objects.filter(status='Expired').count()
+    total_quantity = FoodDonation.objects.filter(status='Accepted') \
+                         .aggregate(Sum('quantity'))['quantity__sum'] or 0
+
+    return render(request, 'about.html', {
+
+        'total_donations': total_donations,
+        'total_accepted': total_accepted,
+        'total_expired': total_expired,
+        'people_fed': total_quantity,
+    })
+
+
 def contact(request):
     return render(request,'contact.html')
 def save_contact(request):
