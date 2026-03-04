@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Donor Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body style="background-color:#f4f6f9;">
+
+<div class="container mt-5">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3>Welcome, {{ request.user.username }}</h3>
+        <a href="{% url 'add_food' %}" class="btn btn-success">+ Add Food</a>
+    </div>
+
+    <!-- Card -->
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-dark text-white">
+            <h5 class="mb-0">My Food Donations</h5>
+        </div>
+
+        <div class="card-body table-responsive">
+            <table class="table table-hover align-middle text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Image</th>
+                        <th>Donor</th>
+                        <th>Shop Name</th>
+                        <th>Food Name</th>
+                        <th>Quantity</th>
+                        <th>Location</th>
+                        <th>Expiry Date
+                         <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for food in donations %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+
+                        <!-- Image -->
+                       <td>
+    {% if food.image %}
+        <img src="{{ food.image.url }}"
+             width="60"
+             height="60"
+             style="object-fit:cover; border-radius:8px;">
+    {% else %}
+        <span class="text-muted">No Image</span>
+    {% endif %}
+</td>
+
+                        <!-- Donor Username -->
+                        <td>{{ food.donor.username }}</td>
+
+                        <td>{{ food.shop_name }}</td>
+                        <td>{{ food.food_name }}</td>
+                        <td>{{ food.quantity }}</td>
+                        <td>{{ food.location }}</td>
+                        <td>{{ food.expiry_date }}
+                         {% if food.expiry_date == today %}
+        <br>
+        <span class="badge bg-warning text-dark">
+            Expiring Today
+        </span>
+    {% endif %}</td>
+                    <td>
+    {% if food.status == "Accepted" %}
+        <span class="badge bg-primary">Accepted</span>
+
+    {% elif food.expiry_date < today %}
+        <span class="badge bg-danger">Expired</span>
+
+    {% elif food.expiry_date == today %}
+        <span class="badge bg-warning text-dark">
+            Expiring Today
+        </span>
+
+    {% else %}
+        <span class="badge bg-success">Available</span>
+    {% endif %}
+</td>
+
+                   <td>
+    {% if food.expiry_date >= today %}
+        <a href="{% url 'edit_food' food.id %}"
+           class="btn btn-sm btn-warning">
+            Edit
+        </a>
+    {% else %}
+        <button class="btn btn-sm btn-secondary" disabled>
+            Cannot Edit
+        </button>
+    {% endif %}
+
+    <a href="{% url 'delete_food' food.id %}"
+       class="btn btn-sm btn-danger"
+       onclick="return confirm('Delete this item?')">
+        Delete
+    </a>
+</td>
+
+
+ </tr>
+
+                    {% empty %}
+                    <tr>
+                        <td colspan="9" class="text-muted">
+                            No food donations added yet.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

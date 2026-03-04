@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>FormWizard_v7</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="author" content="colorlib.com">
+
+		<!-- MATERIAL DESIGN ICONIC FONT -->
+		<link rel="stylesheet" href="{% static 'fonts/material-design-iconic-font/css/material-design-iconic-font.css' %}">
+
+		<!-- DATE-PICKER -->
+		<link rel="stylesheet" href="{% static 'vendor/date-picker/css/datepicker.min.css' %}">
+
+		<!-- STYLE CSS -->
+		<link rel="stylesheet" href="{% static 'css/style.css' %}">
+	</head>
+	<body>
+		<div class="wrapper">
+           <form id="wizard" method="POST" action="{% url 'register' %}">
+    {% csrf_token %}
+        		<!-- SECTION 1 -->
+                <h4></h4>
+                <section>
+                    <div class="inner">
+						<div class="image-holder">
+							<img src="{% static 'images/form-wizard-1.jpg' %}" alt="">
+						</div>
+						<div class="form-content">
+							<div class="form-inner">
+								<div class="form-header">
+									<h3>Book a table</h3>
+									<p>~ Check out our place ~</p>
+								</div>
+
+
+                                     <div class="form-group">
+              <label for="user_type" >User Type</label>
+
+    <select name="user_type" id="user_type" class="form-control" required>
+        <option value="">Select user type</option>
+        <option value="Donor">Donor</option>
+        <option value="Ngo">NGO</option>
+    </select>
+</div>
+                                <div class="form-row">-->
+									<label for="">
+										<i class="zmdi zmdi-account-o"></i>
+										Name
+									</label>
+									<input type="text" class="form-control" placeholder="Name" name="username">
+								</div>
+                                 <div class="form-row">-->
+									<label for="">
+										<i class="zmdi zmdi-account-o"></i>
+										Password
+									</label>
+									<input type="text" class="form-control" placeholder="password" name="password">
+								</div>
+								<div class="form-row">
+									<label for="">
+										<i class="zmdi zmdi-phone"></i>
+										Phone
+									</label>
+									<input type="text" class="form-control" placeholder="My phone" name="phone">
+								</div>
+                                <div class="form-group text-center" style="margin-top: 30px;">
+    <button type="submit" class="btn register-btn">
+        REGISTER
+    </button>
+             </form>
+</div>
+
+<!--								<div class="form-row" style="margin-bottom: 31px;">-->
+<!--									<label for="">-->
+<!--										<i class="zmdi zmdi-calendar-check"></i>-->
+<!--										Date-->
+<!--									</label>-->
+<!--									<input type='text' class='datepicker-here form-control' data-language='en' id="dp" data-date-format="dd M yyyy"/>-->
+<!--								</div>-->
+<!--								<div class="form-row">-->
+<!--									<label for="" style="margin-bottom: 9px;">-->
+<!--										<i class="zmdi zmdi-alarm"></i>-->
+<!--										Time-->
+<!--									</label>-->
+<!--									<div class="form-holder select-holder">-->
+<!--										<select name="" id="" class="form-control">-->
+<!--											<option value="9am"><span>9</span> am</option>-->
+<!--											<option value="10am"><span>10</span> am</option>-->
+<!--											<option value="11am"><span>11</span>am</option>-->
+<!--											<option value="12am"><span>12</span>am</option>-->
+<!--										</select>-->
+<!--										<i class="zmdi zmdi-caret-down"></i>-->
+<!--									</div>-->
+<!--									<div class="form-holder select-holder">-->
+<!--										<select name="" id="" class="form-control">-->
+<!--											<option value="7pm"><span>7</span> pm</option>-->
+<!--											<option value="8pm"><span>8</span> pm</option>-->
+<!--											<option value="9pm"><span>9</span> pm</option>-->
+<!--											<option value="10pm"><span>10</span> pm</option>-->
+<!--										</select>-->
+<!--										<i class="zmdi zmdi-caret-down"></i>-->
+<!--									</div>-->
+								</div>
+							</div>
+        </div>
+          </div>
+
+                  </section>
+
+
+				<!-- SECTION 2 -->
+<!--                <h4></h4>-->
+<!--                <section>-->
+<!--     				<div class="inner">-->
+<!--						<div class="image-holder">-->
+<!--							<img src="{% static 'images/form-wizard-2.jpg' %}" alt="">-->
+<!--						</div>-->
+<!--						<div class="form-content">-->
+<!--							<div class="form-inner">-->
+<!--								<div class="form-header">-->
+<!--									<h3>Contact details</h3>-->
+<!--									<p>~ Check out our place ~</p>-->
+<!--								</div>-->
+<!--								<div class="form-row">-->
+<!--									<label for="">-->
+<!--										<i class="zmdi zmdi-account-o"></i>-->
+<!--										Name-->
+<!--									</label>-->
+<!--									<input type="text" class="form-control" placeholder="Name">-->
+<!--								</div>-->
+<!--								<div class="form-row">-->
+<!--									<label for="">-->
+<!--										<i class="zmdi zmdi-phone"></i>-->
+<!--										Phone-->
+<!--									</label>-->
+<!--									<input type="text" class="form-control" placeholder="My phone">-->
+<!--								</div>-->
+<!--								<div class="form-row">-->
+<!--									<label for="">-->
+<!--										<i class="zmdi zmdi-email"></i>-->
+<!--										Email-->
+<!--									</label>-->
+<!--									<input type="text" class="form-control" placeholder="Your Email">-->
+<!--								</div>-->
+<!--							</div>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--                </section>-->
+
+<!--                &lt;!&ndash; SECTION 3 &ndash;&gt;-->
+<!--                <h4></h4>-->
+<!--                <section>-->
+<!--                    <div class="inner">-->
+<!--						<div class="image-holder">-->
+<!--							<img src="{% static 'images/form-wizard-3.jpg' %}" alt="">-->
+<!--						</div>-->
+<!--						<div class="form-content">-->
+<!--							<div class="form-inner form-inner-last">-->
+<!--								<div class="ready">-->
+<!--									<span>-->
+<!--										<i class="zmdi zmdi-check"></i>-->
+<!--									</span>-->
+<!--									<p class="text-1">Your table is ready</p>-->
+<!--									<p class="text-2">~ Happy friends with a say ~</p>-->
+<!--								</div>-->
+<!--							</div>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--                </section>-->
+<!--            </form>-->
+<!--		</div>-->
+
+
+		<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+
+		<!-- DATE-PICKER -->
+		<script src="{% static 'vendor/date-picker/js/datepicker.js' %}"></script>
+		<script src="{% static 'vendor/date-picker/js/datepicker.en.js' %}"></script>
+
+		<!-- JQUERY STEP -->
+		<script src="{% static 'js/jquery.steps.js' %}"></script>
+
+		<script src="{% static 'js/main.js' %}"></script>
+
+<!-- Template created and distributed by Colorlib -->
+</body>
+</html>
