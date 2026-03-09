@@ -1,11 +1,14 @@
 from django.shortcuts import render,redirect
-from accounts.models import FoodDonation,ProfileDb
+from accounts.models import FoodDonation,ProfileDb,User
 from django.contrib.auth.decorators import login_required
 from.models import  Notification,ContactDb
 
 from django.contrib.auth import logout
 from django.utils import timezone
 from django.db.models import Sum
+from django.contrib import messages
+
+
 
 # Create your views here.
 
@@ -55,19 +58,29 @@ def single_product(request,donation_id):
     return render(request, 'single_product.html', {'donation':donations})
 from .models import PickupRequest
 
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect
 from .models import PickupRequest, FoodDonation
 def send_request(request, donation_id):
     donation = FoodDonation.objects.get(id=donation_id)
+    donor = donation.donor
+    existing_request = PickupRequest.objects.filter(
+        donation=donation,
+        ngo=request.user
+    ).first()
 
-    # Check donation is available
+    if existing_request:
+
+        messages.info(request, "You already requested for this donation.")
+        return redirect("ngo_dashboard")
+
     if donation.status != "Available":
         return redirect("ngo_dashboard")
 
     PickupRequest.objects.create(
         donation=donation,
         ngo=request.user,
-        donor=donation.donor
+        donor=donor,
+        status='Pending'
     )
 
     return redirect("ngo_dashboard")
@@ -76,7 +89,7 @@ def ngo_notifications(request):
         user=request.user
     ).order_by('-created_at')
 
-    # Optional: mark notifications as read when opened
+
     notifications.update(is_read=True)
 
     return render(request, "ngo_notifications.html", {

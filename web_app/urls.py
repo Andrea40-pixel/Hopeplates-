@@ -9,5 +9,9 @@ path('ngo/notifications/', views.ngo_notifications, name='ngo_notifications'),
 path('ngo/logout/', views.ngo_logout, name='ngo_logout'),
                path('about/',views.about,name='about'),
                path('contact/', views.contact, name='contact'),
-               path('save_contact',views.save_contact,name='save_contact')
+               path('save_contact',views.save_contact,name='save_contact'),
+
+
+
+
               ]

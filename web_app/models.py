@@ -8,6 +8,7 @@ class PickupRequest(models.Model):
     ngo = models.ForeignKey(User, on_delete=models.CASCADE, related_name="ngo_requests")
     donor = models.ForeignKey(User, on_delete=models.CASCADE, related_name="donor_requests")
 
+
     STATUS_CHOICES = [
         ('Pending', 'Pending'),
         ('Accepted', 'Accepted'),

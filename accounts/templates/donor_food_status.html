@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Your Food Donations Status</h2>
+
+<table border="1" cellpadding="10" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Food Name</th>
+            <th>Shop Name</th>
+            <th>Quantity</th>
+            <th>Expiry Date</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in donation_status_list %}
+        <tr>
+            <td>{{ item.donation.food_name }}</td>
+            <td>{{ item.donation.shop_name }}</td>
+            <td>{{ item.donation.quantity }}</td>
+            <td>{{ item.donation.expiry_date|date:"d M Y" }}</td>
+            <td>
+                {% if item.status == "Pending" %}
+                    <span style="color: orange; font-weight: bold;">{{ item.status }}</span>
+                {% elif item.status == "Accepted" %}
+                    <span style="color: green; font-weight: bold;">{{ item.status }}</span>
+                {% elif item.status == "Rejected" %}
+                    <span style="color: red; font-weight: bold;">{{ item.status }}</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">You have not donated any food yet.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>

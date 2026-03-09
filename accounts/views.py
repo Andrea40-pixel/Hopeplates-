@@ -19,7 +19,7 @@ def landing(request):
 
 def register(request):
     if request.method == 'POST':
-        print(request.POST)
+
         username = request.POST['username']
         password = request.POST['password']
         user_type = request.POST['user_type']
@@ -184,7 +184,7 @@ def view_requests(request):
 
     requests = PickupRequest.objects.filter(
         donor=request.user,
-        status="available"
+        status="Pending"
     )
 
     return render(request, "view_requests.html", {
@@ -197,7 +197,7 @@ def accept_request(request, request_id):
     pickup.status = "Accepted"
     pickup.save()
 
-    # Update donation status
+
     pickup.donation.status = "Accepted"
     pickup.donation.save()
 
@@ -208,6 +208,12 @@ def accept_request(request, request_id):
             f"Please collect your food within two hours of this confirmation!"
         ))
 
+    messages.success(
+        request,
+        f"You accepted the pickup request for {pickup.donation.food_name}."
+    )
+
+
     return redirect("donar_dashboard")
 
 
@@ -217,12 +223,45 @@ def reject_request(request, request_id):
     pickup.status = "Rejected"
     pickup.save()
 
-    messages.error(
+    Notification.objects.create(
+        user=pickup.ngo,
+        message=(
+            f"Your pickup request for {pickup.donation.food_name} was rejected! "
+))
+
+    messages.warning(
         request,
-        f"Your pickup request for {pickup.donation.food_name} was rejected."
+        f"You rejected the pickup request for {pickup.donation.food_name}."
     )
 
+
     return redirect("donar_dashboard")
+
+def donor_food_status(request):
+    # Get all donations made by this donor
+    donations = FoodDonation.objects.filter(donor=request.user)
+
+    # For each donation, get the related pickup request(s)
+    # We will pass this to the template
+    donation_status_list = []
+
+    for donation in donations:
+        # Get latest pickup request for this donation (if any)
+        pickup = PickupRequest.objects.filter(donation=donation).order_by('-id').first()
+        if pickup:
+            status = pickup.status
+        else:
+            status = "Pending"  # No request yet
+        donation_status_list.append({
+            'donation': donation,
+            'status': status
+        })
+
+    return render(request, 'donor_food_status.html', {
+        'donation_status_list': donation_status_list
+    })
+
+
 
 
 

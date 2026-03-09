@@ -16,6 +16,7 @@ path('logout_view/', views.logout_view, name='logout_view'),
     path('view-requests/', views.view_requests, name='view_requests'),
 path("accept-request/<int:request_id>/", views.accept_request, name="accept_request"),
 path("reject-request/<int:request_id>/", views.reject_request, name="reject_request"),
+path('donor-food-status/', views.donor_food_status, name='donor_food_status')
 
 
 ]
